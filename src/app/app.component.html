@@ -1,0 +1,60 @@
+<div class="app-shell">
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-brand">
+      <span class="brand-icon">♻</span>
+      <div class="brand-text">
+        <h1>EcoTrack</h1>
+        <span class="brand-sub">Gestió de Residus Industrials</span>
+      </div>
+    </div>
+
+    <div class="header-stats">
+      <div class="stat-pill">
+        <span class="stat-num">{{ residusService.pendents().length }}</span>
+        <span class="stat-label">Pendents</span>
+      </div>
+      <div class="stat-pill stat-pill--done">
+        <span class="stat-num">{{ residusService.processats().length }}</span>
+        <span class="stat-label">Processats</span>
+      </div>
+      <div class="stat-pill stat-pill--kg">
+        <span class="stat-num">{{ residusService.totalKg() | number:'1.1-1' }}</span>
+        <span class="stat-label">kg totals</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav">
+    <button
+      class="nav-btn"
+      [class.active]="vista() === 'llista'"
+      (click)="canviarVista('llista')"
+    >
+      <span class="nav-icon">▤</span> Inventari
+    </button>
+    <button
+      class="nav-btn"
+      [class.active]="vista() === 'formulari'"
+      (click)="canviarVista('formulari')"
+    >
+      <span class="nav-icon">＋</span> Nou Residu
+    </button>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="app-main">
+    @if (vista() === 'llista') {
+      <app-residu-list />
+    } @else {
+      <app-residu-form (onAfegit)="canviarVista('llista')" />
+    }
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <span>EcoTrack · EcoSolutions S.L. · {{ today | date:'yyyy' }}</span>
+    <span class="offline-badge" id="offlineBadge">● Offline</span>
+  </footer>
+</div>

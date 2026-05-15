@@ -1,59 +1,117 @@
-# Ecotrack
+# EcoTrack – Guia d'instal·lació i ús
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0.
+## ✅ QUÈ JA TENS FET (el codi)
 
-## Development server
+Tots els fitxers de l'aplicació Angular estan creats:
+- `src/app/models/residu.model.ts`
+- `src/app/services/residus.service.ts`
+- `src/app/app.component.ts / .html / .css`
+- `src/app/components/residu-list/` (tots els fitxers)
+- `src/app/components/residu-form/` (tots els fitxers)
+- `src/manifest.webmanifest`
+- `src/styles.css`
 
-To start a local development server, run:
+---
 
+## 🛠️ QUÈ HAS DE FER TU (passos per ordre)
+
+### PAS 1 – Crear el projecte Angular (si no el tens)
+```bash
+ng new ecotrack --standalone --routing=false --style=css
+cd ecotrack
+```
+
+### PAS 2 – Copiar els fitxers
+Copia tots els fitxers d'aquesta carpeta al teu projecte Angular, respectant la mateixa estructura de carpetes.
+
+**IMPORTANT:** Al fitxer `src/app/app.component.html`, la línia amb `| number` i `| date` requereix que `DecimalPipe` i `DatePipe` estiguin importats al component (ja ho estan al codi que t'he donat).
+
+### PAS 3 – Instal·lar la PWA
+```bash
+ng add @angular/pwa
+```
+Quan pregunti, confirma. Això crearà `ngsw-config.json` i modificarà el `manifest.webmanifest`.
+**Substitueix** el `manifest.webmanifest` generat pel que t'he donat (té els colors i el nom correctes).
+
+### PAS 4 – Provar en local
 ```bash
 ng serve
 ```
+Obre http://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
+### PAS 5 – Compilar per a producció (per a la PWA i l'APK)
 ```bash
 ng build
 ```
+Genera la carpeta `dist/ecotrack/browser/`
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+### PAS 6 – Provar la PWA offline
 ```bash
-ng test
+npx http-server -p 8080 dist/ecotrack/browser
+```
+Obre Chrome a http://localhost:8080
+Ves a F12 > Application > Service Workers → ha d'aparèixer actiu.
+
+### PAS 7 – Publicar la PWA (tria una opció)
+
+**Opció A – Vercel (recomanat, és el més ràpid):**
+```bash
+npm i -g vercel
+vercel dist/ecotrack/browser
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+**Opció B – GitHub Pages:**
 ```bash
-ng e2e
+ng build --base-href "https://TU_USUARI.github.io/ecotrack/"
+# Puja la carpeta dist/ecotrack/browser/ a la branca gh-pages
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+**Opció C – Firebase:**
+```bash
+npm install -g firebase-tools
+firebase login
+firebase init hosting
+firebase deploy
+```
 
-## Additional Resources
+### PAS 8 – Generar l'APK (Capacitor)
+```bash
+# Instal·lar Capacitor
+npm install @capacitor/core @capacitor/cli @capacitor/android
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+# Inicialitzar (canvia 'elteunomapk' pel teu nom sense espais)
+npx cap init EcoTrack com.elteunomapk.ecotrack --web-dir dist/ecotrack/browser
+
+# Afegir Android
+npx cap add android
+
+# Sincronitzar
+npx cap copy
+
+# Obrir Android Studio
+npx cap open android
+```
+
+### PAS 9 – Construir l'APK a Android Studio
+1. Espera que Gradle sincronitzi (barra de progrés a baix)
+2. Menú superior: **Build > Build Bundle(s) / APK(s) > Build APK(s)**
+3. Quan finalitzi, clica "locate" al globus de text → trobaràs el fitxer `app-debug.apk`
+
+---
+
+## 📦 LLIURAMENT FINAL
+
+- **PWA:** Enllaç públic (Vercel / GitHub Pages / Firebase)
+- **APK:** Fitxer `app-debug.apk` generat per Android Studio
+
+---
+
+## ❓ ERRORS FREQÜENTS
+
+**"Cannot find module..."** → Comprova que has copiat tots els fitxers a les carpetes correctes.
+
+**"ng add @angular/pwa fails"** → Assegura't d'estar dins la carpeta del projecte Angular.
+
+**El Service Worker no apareix** → Cal accedir amb `http-server`, NO amb `ng serve`.
+
+**Android Studio no obre** → Has de tenir Android Studio instal·lat: https://developer.android.com/studio

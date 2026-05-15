@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap');
+
+:root {
+  --green-deep: #0d2b1a;
+  --green-mid: #1a4a2e;
+  --green-acid: #4eff7c;
+  --green-soft: #a8f5c2;
+  --cream: #f2eddf;
+  --cream-dark: #e0d9c8;
+  --danger: #ff5c5c;
+  --warning: #ffc95c;
+  --info: #5cb8ff;
+  --text-main: #0d2b1a;
+  --text-muted: #5a7a67;
+  --radius: 12px;
+  --radius-sm: 6px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'DM Mono', monospace;
+  background: var(--cream);
+  color: var(--text-main);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ── HEADER ── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0 16px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  font-size: 2.4rem;
+  background: var(--green-deep);
+  color: var(--green-acid);
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+}
+
+.brand-text h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--green-deep);
+  letter-spacing: -1px;
+}
+
+.brand-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--green-deep);
+  color: var(--cream);
+  padding: 8px 16px;
+  border-radius: 999px;
+  min-width: 70px;
+}
+
+.stat-pill--done { background: var(--green-mid); }
+.stat-pill--kg {
+  background: transparent;
+  border: 2px solid var(--green-deep);
+  color: var(--green-deep);
+}
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+/* ── NAV ── */
+.app-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: var(--cream-dark);
+  padding: 6px;
+  border-radius: var(--radius);
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.nav-btn.active {
+  background: var(--green-deep);
+  color: var(--green-acid);
+  font-weight: 500;
+}
+
+.nav-icon {
+  font-size: 1rem;
+}
+
+/* ── MAIN ── */
+.app-main {
+  padding-bottom: 24px;
+}
+
+/* ── FOOTER ── */
+.app-footer {
+  border-top: 1px solid var(--cream-dark);
+  padding: 12px 0;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.offline-badge {
+  color: var(--danger);
+  display: none;
+}
+
+/* show only when offline */
+@media (offline) {
+  .offline-badge { display: inline; }
+}

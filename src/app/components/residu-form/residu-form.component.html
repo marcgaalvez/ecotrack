@@ -1,0 +1,74 @@
+<div class="form-wrapper">
+
+  <div class="form-header">
+    <h2>Registrar Nou Residu</h2>
+    <p>Omple els camps per afegir un residu a l'inventari.</p>
+  </div>
+
+  <form class="eco-form" (ngSubmit)="submitForm()">
+
+    <div class="field">
+      <label for="nom">Nom del residu</label>
+      <input
+        id="nom"
+        type="text"
+        [(ngModel)]="form.nom"
+        name="nom"
+        placeholder="Ex: Oli Industrial, Bateries..."
+        required
+      />
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="tipus">Tipus</label>
+        <select id="tipus" [(ngModel)]="form.tipus" name="tipus">
+          @for (t of tipusOptions; track t) {
+            <option [value]="t">{{ t }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="pes">Pes (kg)</label>
+        <input
+          id="pes"
+          type="number"
+          [(ngModel)]="form.pes"
+          name="pes"
+          min="0.1"
+          step="0.1"
+          placeholder="0.0"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="data">Data de recollida</label>
+        <input
+          id="data"
+          type="date"
+          [(ngModel)]="dataStr"
+          name="data"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="estat">Estat inicial</label>
+        <select id="estat" [(ngModel)]="form.estat" name="estat">
+          <option value="Pendent">Pendent</option>
+          <option value="Processat">Processat</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">
+      <span>＋</span> Afegir Residu
+    </button>
+
+  </form>
+
+</div>
